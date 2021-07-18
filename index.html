@@ -34,11 +34,11 @@
 
     <main class="col s10">
       <section class="border">
-        <div><h2 id="city-name" class="bold">Atlanta <span id="date">(3/30/2021)</span><span id="weather-icon"> **ICON**</span></h2></div>
-        <h5 class="city-stat" id="city-temp">Temp: 74.01</h5>
-        <h5 class="city-stat" id="city-wind">Wind: 6.67 MPH</h5>
-        <h5 class="city-stat" id="city-humidity">Humidity: 46 %</h5>
-        <h5 class="city-stat" id="city-uv-index">UV Index: 74.01</h5>
+        <div><h2 class="bold"><span id="city-name">Atlanta </span><span id="date">(3/30/2021)</span><span id="weather-icon"> **ICON**</span></h2></div>
+        <h5 class="city-stat">Temp: <span id="city-temp">74.01</span></h5>
+        <h5 class="city-stat">Wind: <span id="city-wind">6.67</span> mph</h5>
+        <h5 class="city-stat">Humidity: <span id="city-humidity">46</span> %</h5>
+        <h5 class="city-stat">UV Index: <span id="city-uv-index">74.01</h5>
       </section>
       
       <section class="five-day-forecast">
@@ -94,6 +94,7 @@
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="/assets/moment.js"></script>
   <script src="/assets/app.js"></script>
 </body>
 </html>

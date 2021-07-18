@@ -8,13 +8,62 @@ hr {
   margin-bottom: 20px;
 }
 
+h2 {
+  margin-top: 0;
+}
+
+p {
+  font-size: large;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.upfontsize {
+  font-size: xx-large;
+}
+
+.padding {
+  padding-bottom: 2%;
+}
+
+.city-stat {
+  margin-top:1.5%;
+}
+
+.btn-large {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.city {
+  width: 80%;
+}
+
+.border {
+  border: 5px solid black;
+  padding: 1%;
+  margin-top:1%;
+  margin-bottom:1%;
+}
+
+.forecast {
+  border: 5px solid black;
+  background-color: #2D3E50;
+  color:white;
+  font-weight: bold;
+  margin-right: 3%;
+  margin-left: 3%;
+}
+
 #city-input {
   font-size: x-large;
   padding-top:5px;
 }
+
 #city-input-label {
   font-size: x-large;
-  /* padding:5px */
 }
 
 #search {
@@ -26,12 +75,7 @@ hr {
   font-size: 35px;
 }
 
-.btn-large {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
 
-.city {
-  width: 80%;
-}
+
+
 

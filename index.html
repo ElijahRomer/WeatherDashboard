@@ -11,9 +11,10 @@
 </head>
 <body>
   <header class="white-text center">
-    <h1 class="container">Weather Dashboard</h1>
+    <h1 class="container banner">Weather Dashboard</h1>
   </header>
   <div class="row">
+
     <aside class="col s2">
       <div class="input-field">
         <input type="text" id="city-input">
@@ -30,9 +31,64 @@
       <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">Phoenix</a>
       <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">Seattle</a>
     </aside>
+
     <main class="col s10">
+      <section class="border">
+        <div><h2 id="city-name" class="bold">Atlanta <span id="date">(3/30/2021)</span><span id="weather-icon"> **ICON**</span></h2></div>
+        <h5 class="city-stat" id="city-temp">Temp: 74.01</h5>
+        <h5 class="city-stat" id="city-wind">Wind: 6.67 MPH</h5>
+        <h5 class="city-stat" id="city-humidity">Humidity: 46 %</h5>
+        <h5 class="city-stat" id="city-uv-index">UV Index: 74.01</h5>
+      </section>
       
+      <section class="five-day-forecast">
+        <h3 class="bold">5-Day Forecast:</h3>
+        <div class="daily-forecasts">
+          <div class="forecast col s2">
+            <h6 class="bold upfontsize padding">3/31/2021</h6> 
+            <p>***ICON HERE***</p>
+            <p>Temp: 74.01</p>
+            <p>Wind: 6.67 MPH</p>
+            <p>Humidity: 46 %</p>
+            <p>UV Index: 74.01</p>
+          </div>
+          <div class="forecast col s2">
+            <h6 class="bold upfontsize padding">3/31/2021</h6>
+            <p>***ICON HERE***</p>
+            <p>Temp: 74.01</p>
+            <p>Wind: 6.67 MPH</p>
+            <p>Humidity: 46 %</p>
+            <p>UV Index: 74.01</p>
+          </div>
+          <div class="forecast col s2">
+            <h6 class="bold upfontsize padding">3/31/2021</h6>
+            <p>***ICON HERE***</p>
+            <p>Temp: 74.01</p>
+            <p>Wind: 6.67 MPH</p>
+            <p>Humidity: 46 %</p>
+            <p>UV Index: 74.01</p>
+          </div>
+          <div class="forecast col s2">
+            <h6 class="bold upfontsize padding">3/31/2021</h6>
+            <p>***ICON HERE***</p>
+            <p>Temp: 74.01</p>
+            <p>Wind: 6.67 MPH</p>
+            <p>Humidity: 46 %</p>
+            <p>UV Index: 74.01</p>
+          </div>
+          <div class="forecast col s2">
+            <h6 class="bold upfontsize padding">3/31/2021</h6>
+            <p>***ICON HERE***</p>
+            <p>Temp: 74.01</p>
+            <p>Wind: 6.67 MPH</p>
+            <p>Humidity: 46 %</p>
+            <p>UV Index: 74.01</p>
+          </div>
+        </div>
+      </section>
     </main>
+
+    
   </div> <!-- row div -->
 
 

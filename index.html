@@ -5,11 +5,38 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather Dashboard</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
-  
+  <header class="white-text center">
+    <h1 class="container">Weather Dashboard</h1>
+  </header>
+  <div class="row">
+    <aside class="col s2">
+      <div class="input-field">
+        <input type="text" id="city-input">
+        <label for="city-input" id="city-input-label">Enter a City Name</label>
+      </div>
+      <a class="waves-effect waves-light btn-large" id="search"><i id="cloud-icon" class=" material-icons left large">cloud</i>Search Weather</a>
+        <hr>
+      <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">Chicago</a>
+      <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">New York</a>
+      <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">Los Angeles</a>
+      <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">Boston</a>
+      <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">Philadelphia</a>
+      <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">Miami</a>
+      <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">Phoenix</a>
+      <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">Seattle</a>
+    </aside>
+    <main class="col s10">
+      
+    </main>
+  </div> <!-- row div -->
+
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="/assets/app.js"></script>
 </body>

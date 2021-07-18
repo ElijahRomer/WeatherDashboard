@@ -1,0 +1,1 @@
+console.log(`If this is logged, then app.js is linked correctly.`)

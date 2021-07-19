@@ -57,6 +57,7 @@ Add a counter for minutes since last update. OR add logic to auto update periodi
 ********** DONE *****************
 
 
+
 Add functionality for clicking on history or Home City to automatically pull weather for that location.
 	DONE
 

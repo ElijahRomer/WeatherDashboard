@@ -15,7 +15,7 @@ const pageInitialize = () => {
   }
   renderPreviousCitySearches();
   let homeCity = retrieveHomeCityFromLocalStorage();
-  // getWeatherInfo(homeCity);
+  getWeatherInfo(homeCity);
 };
 
 const updateHomeCity = (city) => {

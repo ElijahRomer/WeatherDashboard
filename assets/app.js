@@ -297,7 +297,7 @@ console.log(decodeUnixTimeStamp(1626685207, `time`));
       forecastWeatherDescriptionEl.textContent = capitalizeEachWord(forecastWeatherDescription);
       forecastHiTempEl.textContent = dayInfoObject.temp.max;
       forecastLoTempEl.textContent = dayInfoObject.temp.min;
-      forecastWindEl.textContent = generateWindSpeedString(forecastWindCardinalDirection, dayInfoObject.wind_speed, dayInfoObject.wind_gust)
+      forecastWindEl.textContent = generateWindSpeedString(forecastWindCardinalDirection, dayInfoObject.wind_speed)
       forecastHumidityEl.textContent = dayInfoObject.humidity;
   }
   

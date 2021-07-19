@@ -1,5 +1,7 @@
 console.log(`If this is logged, then app.js is linked correctly.`);
 
+M.AutoInit();
+
 let defaultCityName = `Chicago`;
 
 const getWeatherInfo = () => {
@@ -8,6 +10,7 @@ const getWeatherInfo = () => {
   let cityName = document.querySelector(`#city-input`).value;
   let getLatLongCoordFetchUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`;
   fetchWeatherData(getLatLongCoordFetchUrl, APIKey)
+
   
   console.log(getLatLongCoordFetchUrl)
 }
@@ -222,22 +225,28 @@ const decodeUnixTimeStamp = (unixStamp) => {
     .then(json => {
       console.log(json)
       console.log(`The city returned from API is ${json.name}`)
+      if (json.name === undefined) {
+        throw `ERROR: 404 (Not Found) The city could not be found as entered.`
+      }
       document.querySelector(`#city-name`).textContent = `${json.name}, `;
       console.log(`LATITUDE OF ${json.name} IS ${json.coord.lat}`)
       console.log(`LONGITUDE OF ${json.name} IS ${json.coord.lon}`)
       console.log(json.coord)
       return json.coord;
     })
-  .then(coord => {
-    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&units=imperial&exclude=minutely,hourly&appid=${APIKey}`)
-      .then(response => response.json())
-      .then(json => {
-        console.log(json);
-          renderUpdatedWeatherValues(json);
-          rotateArrow(json.current.wind_deg);
-          update5DayForecast(json.daily)
-
-
-      })
+    .then(coord => {
+      fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&units=imperial&exclude=minutely,hourly&appid=${APIKey}`)
+        .then(response => response.json())
+        .then(json => {
+          console.log(json);
+            renderUpdatedWeatherValues(json);
+            rotateArrow(json.current.wind_deg);
+            update5DayForecast(json.daily)
+      }) 
     })
+    .catch(err => {
+      console.error(err);
+      document.querySelector(`#invalid-city-trigger`).click();
+      document.querySelector(`#city-input`).color = `red`;
+    }) 
   }

@@ -149,5 +149,17 @@ p {
   /* background-color: limegreen; */
 }
 
+.modal-content h4 {
+  text-align: center;
+  background-color: teal;
+  color: white;
+  padding: 5px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
 
 

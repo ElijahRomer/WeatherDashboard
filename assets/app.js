@@ -104,15 +104,53 @@ const decodeUnixTimeStamp = (unixStamp) => {
       return `${windSpeed} mph ${windDirection} gusting to ${windGust} mph`;
     }
   }
+
+  const UVIndexColorizer = (UVIndex) => {
+    console.log(`UVIndexColorizer FIRED`);
+    console.log(`UVIndex is ${UVIndex}`);
+    let UVIndexEl = document.querySelector(`#city-uv-index`);
+    if (UVIndex === 0) {
+        UVIndexEl.style.backgroundColor = `purple`;
+        UVIndexEl.style.color = `lightblue`;
+        document.querySelector(`#city-uv-index`).textContent = `N/A`;
+      return;
+    } else if (UVIndex < 3) {
+        UVIndexEl.style.backgroundColor = `limegreen`;
+        UVIndexEl.style.color = `black`;
+        document.querySelector(`#city-uv-index`).textContent = UVIndex;
+      return;
+    } else if (UVIndex < 6) {
+        UVIndexEl.style.backgroundColor = `yellow`;
+        UVIndexEl.style.color = `black`;
+        document.querySelector(`#city-uv-index`).textContent = UVIndex;
+      return;
+    }  else if (UVIndex < 8) {
+        UVIndexEl.style.backgroundColor = `orange`;
+        UVIndexEl.style.color = `black`;
+        document.querySelector(`#city-uv-index`).textContent = UVIndex;
+      return;
+    } else if (UVIndex < 11) {
+        UVIndexEl.style.backgroundColor = `red`;
+        UVIndexEl.style.color = `black`;
+        document.querySelector(`#city-uv-index`).textContent = UVIndex;
+      return;
+    } else {
+      UVIndexEl.style.backgroundColor = `#6B49C8`;
+      UVIndexEl.style.color = `black`;
+      document.querySelector(`#city-uv-index`).textContent = UVIndex;
+    }
+  }
+
+  UVIndexColorizer(0)
   
   
   const renderUpdatedWeatherValues = (json) => {
-    console.log(`renderUpdatedWeatherValues FIRED`);
-    console.log(json);
+      console.log(`renderUpdatedWeatherValues FIRED`);
+      console.log(json);
     let currentWeatherIconEl = document.querySelector(`#current-weather-icon`);
     let currentWeatherIconTag = json.current.weather[0].icon;
     let currentWeatherDescription = capitalizeEachWord(json.current.weather[0].description);
-    console.log(json.current.weather[0].icon);
+      console.log(json.current.weather[0].icon);
     updateWeatherIcon(currentWeatherIconEl, currentWeatherIconTag);
     let currentDateTime = decodeUnixTimeStamp(json.current.dt);
     let currentTempF = json.current.temp;
@@ -122,13 +160,13 @@ const decodeUnixTimeStamp = (unixStamp) => {
     let windGust = json.current.wind_gust;
     let humidity = json.current.humidity;
     let UVIndex = json.current.uvi;
-    document.querySelector(`#description`).textContent = currentWeatherDescription;
-    document.querySelector(`#date`).textContent = ` ${currentDateTime} `;
-    document.querySelector(`#city-temp`).textContent = `${currentTempF} `;
-    rotateArrow(windDegrees);
-    document.querySelector(`#city-wind`).textContent = generateWindSpeedString(windDirection, windSpeed, windGust);
-    document.querySelector(`#city-humidity`).textContent = humidity;
-    document.querySelector(`#city-uv-index`).textContent = UVIndex;
+      UVIndexColorizer(UVIndex);
+      document.querySelector(`#description`).textContent = currentWeatherDescription;
+      document.querySelector(`#date`).textContent = ` ${currentDateTime} `;
+      document.querySelector(`#city-temp`).textContent = `${currentTempF} `;
+      rotateArrow(windDegrees);
+      document.querySelector(`#city-wind`).textContent = generateWindSpeedString(windDirection, windSpeed, windGust);
+      document.querySelector(`#city-humidity`).textContent = humidity;
   }
 
 

@@ -130,13 +130,24 @@ p {
   margin-left: 3%;
 }
 
+
 .F-description {
-  /* text-align: left; */
   font-style: italic;
   font-weight: lighter;
   font-size: xx-large;
 }
 
+
+#city-uv-index {
+  display:inline-block;
+  text-align: center;
+  padding:0 15px ;
+  margin-left: 5px;
+  min-width: 100px;
+  border-radius: 20px;
+  border: 3px solid black;
+  /* background-color: limegreen; */
+}
 
 
 

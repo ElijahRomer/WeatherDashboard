@@ -17,13 +17,18 @@ p {
   text-align: center;
 }
 
+aside {
+  min-width: 100px;
+}
+
 .banner {
   font-size: 290%;
+  min-height: fit-content;
 }
 
 .banner-info {
   display: flex;
-  /* justify-content: center; */
+  flex-wrap: wrap;
   align-items: center;
   font-size: 3rem;
 }
@@ -139,7 +144,8 @@ p {
   font-weight: bold;
   margin-right: 3%;
   margin-left: 3%;
-  /* min-width: fit-content; NEED TO ADD THIS BUT WILL TAKE RESTYLING OF THE FORECAST BOXES TO MAKE IT WORK*/
+  min-width: fit-content; 
+  margin-bottom: 10px ;
 }
 
 
@@ -182,4 +188,46 @@ p {
   position: relative;
   /* top:100%; */
   left:80%
+}
+
+@media screen and (max-width:992px) {
+  .compass-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 0; */
+    margin-bottom: 200px;
+    text-align: left;
+    /* height: 250px; */
+  }
+  
+  .compass-title {
+    margin-bottom: 0px;
+    padding-top: 0;
+    text-align: left;
+  }
+  
+  
+  #compass {
+    position: absolute;
+    top: 50px;
+    margin: 25px auto;
+    width: 15vw;
+  }
+  
+  
+  #arrow {
+    position: absolute;
+    top: 80px;
+    width: 9vw;
+    z-index: 100;
+  }
+}
+
+@media screen and (max-width:396px) {
+  .banner {
+    font-size: 260%;
+  }
 }

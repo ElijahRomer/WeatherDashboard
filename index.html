@@ -15,12 +15,12 @@
   </header>
   <div class="row">
 
-    <aside class="col s2">
+    <aside class="col s12 m3 l2">
       <div class="input-field">
         <input type="text" id="city-input">
         <label for="city-input" id="city-input-label">Enter a City</label>
       </div>
-      <a class="waves-effect waves-light btn-large search" id="search"><i id="cloud-icon" class=" material-icons left large">cloud</i>Get Weather</a>
+      <a class="waves-effect waves-light btn-large search" id="search"><i id="cloud-icon" class=" material-icons left large">cloud</i>Search</a>
         <hr>
         <p>Home City set to: </p>
       <a class="waves-effect waves-light btn-large red lighten-2 black-text search" id="home-city-el">Chicago</a>
@@ -30,13 +30,13 @@
       </div>
     </aside>
 
-    <main class="col s10">
+    <main class="col s12 m9 l10">
       <section class="border row">
-        <div class="col s9">
-          <div class="banner-info bold">
-            <span id="city-name">Atlanta </span>&nbsp;
-            <span id="date">(3/30/2021)</span>
-            <img id="current-weather-icon" src="http://openweathermap.org/img/wn/10d@2x.png">
+        <div class="col s12 l9">
+          <div class="banner-info bold row">
+            <span class="col m6l4" id="city-name">Atlanta </span>&nbsp;
+            <span  class="col l6"id="date">(3/30/2021)</span>
+            <img class="col l2" id="current-weather-icon" src="http://openweathermap.org/img/wn/10d@2x.png">
           </div>
           <p class="last-updated"></p>
           <h4 class="city-stat" id="description">Overcast Clouds</h4>
@@ -46,8 +46,8 @@
           <h5 class="city-stat col s10">Current UV Index: <span id="city-uv-index">74.01</span></h5>
         </div>
 
-        <div class="col s3 compass-container">
-          <h5 class="compass-title">Current Wind Direction</h5>
+        <div class="col s6 l3 compass-container">
+          <h5 class="compass-title">Wind Direction Visual</h5>
           <img id="compass" src="assets/images/16 cardinal directions.png">
           <img id="arrow" src="assets/images/Arrow.png">
         </div>

@@ -61,7 +61,7 @@ document.querySelector(`#set-current-as-home`).addEventListener(`click`, routeHo
 
 
 const getWeatherInfo = (cityName) => {
-  // console.log(`getWeatherInfo FIRED`);
+  console.log(`getWeatherInfo FIRED`);
   document.querySelector(`#set-current-as-home`).value = cityName;
   const APIKey = `23b24ea95d3f9c9ddcf2eea23ed648c8`
   let getLatLongCoordFetchUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`;
@@ -85,12 +85,16 @@ const getWeatherInfo = (cityName) => {
 
 const persistCityToLocalStorage = (cityName) => {
   console.log(`persistCityToLocalStorage FIRED`);
+    let previousCitySearchesArray = JSON.parse(localStorage.getItem(`previousCitySearches`));
   if (localStorage.getItem(`previousCitySearches`) === null) {
       console.log(`No Cities saved in Local Storage`)
       localStorage.setItem(`previousCitySearches`, JSON.stringify([cityName]));
       return;
+  } else if (previousCitySearchesArray.includes(cityName)){
+    console.log(`City ${cityName} already saved in Local Storage`);
+    return;
   } else {
-    let previousCitySearchesArray = JSON.parse(localStorage.getItem(`previousCitySearches`));
+
     if (previousCitySearchesArray.length < 10) {
         console.log(`previousCitySearchesArray.length is less than 10`)
         previousCitySearchesArray.unshift(cityName);
@@ -111,18 +115,18 @@ const renderPreviousCitySearches = () => {
   for (let i = previousCitySearchContainerEl.children.length - 1; i >=0; i--) {
     previousCitySearchContainerEl.children[i].remove()
   };
-
   let previousCitySearchesArray = JSON.parse(localStorage.getItem(`previousCitySearches`));
-
-    previousCitySearchesArray.forEach((city) => {
-      let prevCitySearchEl = document.createElement(`a`);
-        prevCitySearchEl.setAttribute('class', 'waves-effect waves-light btn-large grey darken-1 black-text search');
-        prevCitySearchEl.textContent = city;
-        prevCitySearchEl.value = city;
-        prevCitySearchEl.addEventListener(`click`, routeHistoryClickFetch)
-      previousCitySearchContainerEl.appendChild(prevCitySearchEl);
-    }
-  )
+    if (previousCitySearchesArray !== null){
+      previousCitySearchesArray.forEach((city) => {
+        let prevCitySearchEl = document.createElement(`a`);
+          prevCitySearchEl.setAttribute('class', 'waves-effect waves-light btn-large grey darken-1 black-text search');
+          prevCitySearchEl.textContent = city;
+          prevCitySearchEl.value = city;
+          prevCitySearchEl.addEventListener(`click`, routeHistoryClickFetch)
+        previousCitySearchContainerEl.appendChild(prevCitySearchEl);
+      }
+    )
+  }
 };
 
 

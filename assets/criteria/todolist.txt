@@ -33,7 +33,6 @@ City Search
 
 
 
-Add functionality for clicking on history or Home City to automatically pull weather for that location.
 
 Make the main banner instead of city- ids for values, make it f0 to allow yourself to delete the entire rendervalues function
 
@@ -58,6 +57,8 @@ Add a counter for minutes since last update. OR add logic to auto update periodi
 ********** DONE *****************
 
 
+Add functionality for clicking on history or Home City to automatically pull weather for that location.
+	DONE
 
 
 add logic to allow user to select a default city. 

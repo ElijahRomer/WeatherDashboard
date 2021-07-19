@@ -8,13 +8,14 @@ let currentCity;
 const pageInitialize = () => {
   console.log(`pageInitialize FIRED`);
   console.log(localStorage.getItem(`homeCity`));
-  if (localStorage.getItem(`homeCity`) === null) {
+  console.log(typeof localStorage.getItem(`homeCity`));
+  if (localStorage.getItem(`homeCity`) === null||localStorage.getItem(`homeCity`) === "") {
     console.log(`No homeCity found. Setting to Chicago.`)
     updateHomeCity(`chicago`)
   }
   renderPreviousCitySearches();
   let homeCity = retrieveHomeCityFromLocalStorage();
-  getWeatherInfo(homeCity);
+  // getWeatherInfo(homeCity);
 };
 
 const updateHomeCity = (city) => {
@@ -22,12 +23,15 @@ const updateHomeCity = (city) => {
   localStorage.setItem(`homeCity`, city);
   document.querySelector(`#home-city-el`).textContent = city;
   document.querySelector(`#home-city-el`).value = city;
+  document.querySelector(`#home-city-el`).addEventListener('click', routeHistoryClickFetch)
 };
 
 const retrieveHomeCityFromLocalStorage = () => {
     console.log(`retrieveHomeCityFromLocalStorage FIRED`);
     homeCity = localStorage.getItem(`homeCity`);
     document.querySelector(`#home-city-el`).textContent = homeCity;
+    document.querySelector(`#home-city-el`).value = homeCity;
+    document.querySelector(`#home-city-el`).addEventListener('click', routeHistoryClickFetch)
   return homeCity;
 };
 
@@ -41,16 +45,24 @@ const routeHistoryClickFetch = (eventObject) => {
   getWeatherInfo(city);
 }
 
+const routeHomeClickSet = (eventObject) => {
+  let city = eventObject.target.value;
+  updateHomeCity(city);
+}
+
 
 document.querySelector(`#search`).addEventListener('click', captureValueAndTriggerAppFunction);
 
 document.addEventListener(`DOMContentLoaded`, pageInitialize);
+
+document.querySelector(`#set-current-as-home`).addEventListener(`click`, routeHomeClickSet)
 
 
 
 
 const getWeatherInfo = (cityName) => {
   // console.log(`getWeatherInfo FIRED`);
+  document.querySelector(`#set-current-as-home`).value = cityName;
   const APIKey = `23b24ea95d3f9c9ddcf2eea23ed648c8`
   let getLatLongCoordFetchUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`;
   fetchWeatherData(getLatLongCoordFetchUrl, APIKey)
@@ -62,8 +74,7 @@ const getWeatherInfo = (cityName) => {
     } else {
       persistCityToLocalStorage(cityName);
       renderPreviousCitySearches()
-    }
-    })
+    }})
   .catch((err) => {
     console.log(`getWeatherInfo .catch path triggered with an error of ${err}`)
     document.querySelector(`#invalid-city-trigger`).click()

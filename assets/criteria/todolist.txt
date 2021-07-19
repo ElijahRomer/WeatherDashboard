@@ -33,9 +33,7 @@ City Search
 
 
 
-
-add logic to allow user to select a default city. 
-
+Add functionality for clicking on history or Home City to automatically pull weather for that location.
 
 Make the main banner instead of city- ids for values, make it f0 to allow yourself to delete the entire rendervalues function
 
@@ -47,7 +45,7 @@ reduce max history entries to 8
 
 make 5 day forecast icon move below the date and stack
 
-make 5 day forecast responsively stack on screen resize
+make 5 day forecast entries responsively stack on screen resize
 
 make 5 day forecast min width = fit content
 
@@ -58,6 +56,13 @@ Add a counter for minutes since last update. OR add logic to auto update periodi
 
 
 ********** DONE *****************
+
+
+
+
+add logic to allow user to select a default city. 
+	DONE
+
 
 Add logic so that a cities info is loaded by default on pageload.
 	DONE

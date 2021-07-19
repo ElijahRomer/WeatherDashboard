@@ -21,6 +21,7 @@ const updateHomeCity = (city) => {
   console.log(`updateHomeCity FIRED`);
   localStorage.setItem(`homeCity`, city);
   document.querySelector(`#home-city-el`).textContent = city;
+  document.querySelector(`#home-city-el`).value = city;
 };
 
 const retrieveHomeCityFromLocalStorage = () => {
@@ -35,6 +36,10 @@ const captureValueAndTriggerAppFunction = () => {
   getWeatherInfo(currentCity);
 };
 
+const routeHistoryClickFetch = (eventObject) => {
+  let city = eventObject.target.value;
+  getWeatherInfo(city);
+}
 
 
 document.querySelector(`#search`).addEventListener('click', captureValueAndTriggerAppFunction);
@@ -100,8 +105,10 @@ const renderPreviousCitySearches = () => {
 
     previousCitySearchesArray.forEach((city) => {
       let prevCitySearchEl = document.createElement(`a`);
-      prevCitySearchEl.setAttribute('class', 'waves-effect waves-light btn-large grey darken-1 black-text search');
-      prevCitySearchEl.textContent = city;
+        prevCitySearchEl.setAttribute('class', 'waves-effect waves-light btn-large grey darken-1 black-text search');
+        prevCitySearchEl.textContent = city;
+        prevCitySearchEl.value = city;
+        prevCitySearchEl.addEventListener(`click`, routeHistoryClickFetch)
       previousCitySearchContainerEl.appendChild(prevCitySearchEl);
     }
   )
@@ -324,15 +331,3 @@ console.log(decodeUnixTimeStamp(1626685207, `time`));
     }) 
   }
 
-  // const APIKey = `23b24ea95d3f9c9ddcf2eea23ed648c8`
-  // let cityName = document.querySelector(`#city-input`).value;
-  // let getLatLongCoordFetchUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`;
-
-  // async function testFunction(){
-  //   console.log(`%c testing returnValueTest`, `color:red`)
-
-  //   let returnValueTest = await fetchWeatherData(getLatLongCoordFetchUrl, APIKey);
-  //   await console.log(returnValueTest)
-  // }
-
-  // testFunction();

@@ -26,6 +26,46 @@ City Search
 15. NW = 315-337.5 = boundary 326
 16. NNW = 337.5-360 = boundary 349
 
+
+
+
+**********TO DO*****************
+
+
+
+
+add logic to allow user to select a default city. 
+
+
+Make the main banner instead of city- ids for values, make it f0 to allow yourself to delete the entire rendervalues function
+
+remove gusting verbiage from 5 day forecasts
+
+add logic so that if the entered city is already in the searched city array is will not add again
+
+reduce max history entries to 8
+
+make 5 day forecast icon move below the date and stack
+
+make 5 day forecast responsively stack on screen resize
+
+make 5 day forecast min width = fit content
+
+
+Add a counter for minutes since last update. OR add logic to auto update periodically 
+
+
+
+
+********** DONE *****************
+
+Add logic so that a cities info is loaded by default on pageload.
+	DONE
+
+
+Add persistance for previous searches
+	DONE
+
 Add a logic check for whether gust info is included- if not, omit that info so it doesnt display undefined
 	Done
 
@@ -36,18 +76,10 @@ Add a logic pull for icon src attribute update
 	Done
 
 Add logic to reset the compass arrow each time 
-	Not necessary because the transform attribute is replaced
-
-
-
-Make the main banner instead of city- ids for values, make it f0 to allow yourself to delete the entire rendervalues function
-
-Add logic so that a cities info is loaded by default on pageload.
-
-add logic to allow user to select a default city. 
-
-Add a counter for minutes since last update. OR add logic to auto update periodically 
+	Not necessary because the transform attribute is replaced and recalculated from 0 each time
 
 Make daily forecasts load
+	Done
 
-Add persistance for previous searches
+Add validation for whether city returns valid results from API or not	
+	Done via promises

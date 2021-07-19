@@ -17,19 +17,17 @@
 
     <aside class="col s2">
       <div class="input-field">
-        <input type="text" id="city-input" value="Chicago">
-        <label for="city-input" id="city-input-label">Enter a City Name</label>
+        <input type="text" id="city-input">
+        <label for="city-input" id="city-input-label">Enter a City</label>
       </div>
       <a class="waves-effect waves-light btn-large" id="search"><i id="cloud-icon" class=" material-icons left large">cloud</i>Search Weather</a>
         <hr>
-      <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">Chicago</a>
-      <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">New York</a>
-      <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">Los Angeles</a>
-      <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">Boston</a>
-      <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">Philadelphia</a>
-      <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">Miami</a>
-      <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">Phoenix</a>
-      <a class="waves-effect waves-light btn-large grey darken-1 black-text" id="search">Seattle</a>
+        <p>Home City set to: </p>
+      <a class="waves-effect waves-light btn-large red lighten-2 black-text search" id="home-city-el">Chicago</a>
+        <hr>
+      <div id="city-search-history">
+          <!-- City Search History goes here -->         
+      </div>
     </aside>
 
     <main class="col s10">
@@ -45,7 +43,7 @@
           <h5 class="city-stat col s10">Temp: <span id="city-temp">74.01</span> °F</h5>
           <h5 class="city-stat col s10">Wind: <span id="city-wind">6.67</span></h5>
           <h5 class="city-stat col s10">Humidity: <span id="city-humidity">46</span>%</h5>
-          <h5 class="city-stat col s10">UV Index: <span id="city-uv-index">74.01</span></h5>
+          <h5 class="city-stat col s10">Current UV Index: <span id="city-uv-index">74.01</span></h5>
         </div>
 
         <div class="col s3 compass-container">
@@ -131,7 +129,7 @@
   <div id="modal1" class="modal">
     <div class="modal-content">
       <h4>City Not Found</h4>
-      <p>The city you entered could not be found! Please verify spelling or enter different city to continue. </p>
+      <p>The city you entered could not be found! Please verify spelling or enter a different city to get results. </p>
     </div>
     <div class="modal-footer">
       <a href="#!" class="modal-close waves-effect waves-green btn">Continue</a>

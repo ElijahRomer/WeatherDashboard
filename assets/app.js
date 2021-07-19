@@ -2,42 +2,130 @@ console.log(`If this is logged, then app.js is linked correctly.`);
 
 M.AutoInit();
 
-let defaultCityName = `Chicago`;
+let homeCity;
+let currentCity;
 
-const getWeatherInfo = () => {
-  console.log(`getWeatherInfo FIRED`);
-  const APIKey = `23b24ea95d3f9c9ddcf2eea23ed648c8`
-  let cityName = document.querySelector(`#city-input`).value;
-  let getLatLongCoordFetchUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`;
-  fetchWeatherData(getLatLongCoordFetchUrl, APIKey)
-
-  
-  console.log(getLatLongCoordFetchUrl)
-}
-
-document.querySelector(`#search`).addEventListener('click', getWeatherInfo)
-
-
-
-const decodeUnixTimeStamp = (unixStamp) => {
-  console.log(`decodeUnixTimeStamp FIRED`);
-  let unixToJSTimeStamp = unixStamp * 1000;    
-  let formattedJSTime = moment(unixToJSTimeStamp).format(`MMMM Do YYYY`);
-  return formattedJSTime;
+const pageInitialize = () => {
+  console.log(`pageInitialize FIRED`);
+  console.log(localStorage.getItem(`homeCity`));
+  if (localStorage.getItem(`homeCity`) === null) {
+    console.log(`No homeCity found. Setting to Chicago.`)
+    updateHomeCity(`chicago`)
+  }
+  renderPreviousCitySearches();
+  let homeCity = retrieveHomeCityFromLocalStorage();
+  getWeatherInfo(homeCity);
 };
 
-// let convertKelvinToFahrenheit = (k) => {
-  //   console.log(`convertKelvinToFahrenheit FIRED`);
-  //   // (0K − 273.15) × 9/5 + 32 = -459.7°F
-  //   let kelvin = k * 100;
-  //   let fahrenheitTimes100 = (kelvin - 27315) * 9/5 + 3200;
-  //   let fahrenheit = fahrenheitTimes100 / 100;
-  //   console.log(fahrenheit);
-  //   return fahrenheit.toFixed(2);
-  // };
+const updateHomeCity = (city) => {
+  console.log(`updateHomeCity FIRED`);
+  localStorage.setItem(`homeCity`, city);
+  document.querySelector(`#home-city-el`).textContent = city;
+};
+
+const retrieveHomeCityFromLocalStorage = () => {
+    console.log(`retrieveHomeCityFromLocalStorage FIRED`);
+    homeCity = localStorage.getItem(`homeCity`);
+    document.querySelector(`#home-city-el`).textContent = homeCity;
+  return homeCity;
+};
+
+const captureValueAndTriggerAppFunction = () => {
+  currentCity = document.querySelector(`#city-input`).value;
+  getWeatherInfo(currentCity);
+};
+
+
+
+document.querySelector(`#search`).addEventListener('click', captureValueAndTriggerAppFunction);
+
+document.addEventListener(`DOMContentLoaded`, pageInitialize);
+
+
+
+
+const getWeatherInfo = (cityName) => {
+  // console.log(`getWeatherInfo FIRED`);
+  const APIKey = `23b24ea95d3f9c9ddcf2eea23ed648c8`
+  let getLatLongCoordFetchUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`;
+  fetchWeatherData(getLatLongCoordFetchUrl, APIKey)
+  .then(message => {
+    console.log(`message is ${message}`)
+    if (message !== `success`){
+      console.log(`message received was NOT "success"`);
+      throw message;
+    } else {
+      persistCityToLocalStorage(cityName);
+      renderPreviousCitySearches()
+    }
+    })
+  .catch((err) => {
+    console.log(`getWeatherInfo .catch path triggered with an error of ${err}`)
+    document.querySelector(`#invalid-city-trigger`).click()
+  })
+};
+
+
+
+const persistCityToLocalStorage = (cityName) => {
+  console.log(`persistCityToLocalStorage FIRED`);
+  if (localStorage.getItem(`previousCitySearches`) === null) {
+      console.log(`No Cities saved in Local Storage`)
+      localStorage.setItem(`previousCitySearches`, JSON.stringify([cityName]));
+      return;
+  } else {
+    let previousCitySearchesArray = JSON.parse(localStorage.getItem(`previousCitySearches`));
+    if (previousCitySearchesArray.length < 10) {
+        console.log(`previousCitySearchesArray.length is less than 10`)
+        previousCitySearchesArray.unshift(cityName);
+        localStorage.setItem(`previousCitySearches`, JSON.stringify(previousCitySearchesArray));
+    } else {
+        console.log(`previousCitySearchesArray.length is 10 or greater`)
+        previousCitySearchesArray.pop();
+        previousCitySearchesArray.unshift(cityName);
+        localStorage.setItem(`previousCitySearches`, JSON.stringify(previousCitySearchesArray))
+    }
+  }
+};
+
+const renderPreviousCitySearches = () => {
+  console.log(`renderPreviousCitySearches FIRED`);
+  let previousCitySearchContainerEl = document.querySelector(`#city-search-history`);
+
+  for (let i = previousCitySearchContainerEl.children.length - 1; i >=0; i--) {
+    previousCitySearchContainerEl.children[i].remove()
+  };
+
+  let previousCitySearchesArray = JSON.parse(localStorage.getItem(`previousCitySearches`));
+
+    previousCitySearchesArray.forEach((city) => {
+      let prevCitySearchEl = document.createElement(`a`);
+      prevCitySearchEl.setAttribute('class', 'waves-effect waves-light btn-large grey darken-1 black-text search');
+      prevCitySearchEl.textContent = city;
+      previousCitySearchContainerEl.appendChild(prevCitySearchEl);
+    }
+  )
+};
+
+
+const decodeUnixTimeStamp = (unixStamp, format) => {
+  // console.log(`decodeUnixTimeStamp FIRED`);
+  let unixToJSTimeStamp = unixStamp * 1000;
+  if (format === `time`){
+      let formattedJSTime = moment(unixToJSTimeStamp).format('LT');
+      return formattedJSTime;
+  } else {
+      let formattedJSTime = moment(unixToJSTimeStamp).format(`MMMM Do YYYY`);
+      return formattedJSTime;
+  }
+};
+
+console.log(decodeUnixTimeStamp(1626685207));
+console.log(decodeUnixTimeStamp(1626685207, `time`));
+
   
   const convertDegreesToCardinalDirections = (deg) => {
-    console.log(`convertDegreesToCardinalDirections FIRED`);
+    // console.log(`convertDegreesToCardinalDirections FIRED`);
     if(deg < 11){
       return 'S';
     } else if (deg < 34) {
@@ -78,29 +166,29 @@ const decodeUnixTimeStamp = (unixStamp) => {
   
   
   const rotateArrow = (deg) => {
-    console.log(`rotateArrow  FIRED`)
-    console.log(deg)
-    let arrow = document.querySelector('#arrow');
-    console.log(arrow)
-    arrow.style.transform = `rotate(${deg}deg)`
+    // console.log(`rotateArrow  FIRED`)
+      let arrow = document.querySelector('#arrow');
+      arrow.style.transform = `rotate(${deg}deg)`
   }
   
+
   const updateWeatherIcon = (imgEl, iconTag) => {
-    console.log(imgEl);
-    console.log(iconTag);
+    // console.log(`updateWeatherIcon FIRED`);
     imgEl.setAttribute(`src`, `http://openweathermap.org/img/wn/${iconTag}@2x.png`)
   }
   
+
   const capitalizeEachWord = (sentence) => {
-    console.log(`%ccapitalizeEachWord FIRED`, 'color:red')
+    // console.log(`capitalizeEachWord FIRED`)
     let capitalizedSentence = sentence.split(' ')
     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
     .join(' ');
     return capitalizedSentence;
   }
   
+
   const generateWindSpeedString = (windDirection, windSpeed, windGust) => {
-    console.log(`generateWindSpeedString FIRED`);
+    // console.log(`generateWindSpeedString FIRED`);
     if (windGust === undefined) {
       return `${windSpeed} mph ${windDirection}`;
     } else {
@@ -108,9 +196,10 @@ const decodeUnixTimeStamp = (unixStamp) => {
     }
   }
 
+
   const UVIndexColorizer = (UVIndex) => {
-    console.log(`UVIndexColorizer FIRED`);
-    console.log(`UVIndex is ${UVIndex}`);
+    // console.log(`UVIndexColorizer FIRED`);
+    // console.log(`UVIndex is ${UVIndex}`);
     let UVIndexEl = document.querySelector(`#city-uv-index`);
     if (UVIndex === 0) {
         UVIndexEl.style.backgroundColor = `purple`;
@@ -143,17 +232,15 @@ const decodeUnixTimeStamp = (unixStamp) => {
       document.querySelector(`#city-uv-index`).textContent = UVIndex;
     }
   }
-
-  UVIndexColorizer(0)
   
   
   const renderUpdatedWeatherValues = (json) => {
-      console.log(`renderUpdatedWeatherValues FIRED`);
-      console.log(json);
+      // console.log(`renderUpdatedWeatherValues FIRED`);
+      // console.log(json);
     let currentWeatherIconEl = document.querySelector(`#current-weather-icon`);
     let currentWeatherIconTag = json.current.weather[0].icon;
     let currentWeatherDescription = capitalizeEachWord(json.current.weather[0].description);
-      console.log(json.current.weather[0].icon);
+      // console.log(json.current.weather[0].icon);
     updateWeatherIcon(currentWeatherIconEl, currentWeatherIconTag);
     let currentDateTime = decodeUnixTimeStamp(json.current.dt);
     let currentTempF = json.current.temp;
@@ -176,8 +263,7 @@ const decodeUnixTimeStamp = (unixStamp) => {
 
   
   const updateDayForecast = (dayIndexNumber, dayInfoObject) => {
-    console.log(`updateDayForecast FIRED`);
-  
+    // console.log(`updateDayForecast FIRED`);
     let forecastWeatherIconEl = document.querySelector(`#F${dayIndexNumber}-weather-icon`);
     let forecastWeatherDescriptionEl = document.querySelector(`#F${dayIndexNumber}-description`);
     let forecastDateEl = document.querySelector(`#F${dayIndexNumber}-date`);
@@ -185,42 +271,29 @@ const decodeUnixTimeStamp = (unixStamp) => {
     let forecastLoTempEl =  document.querySelector(`#F${dayIndexNumber}-temp-lo`)
     let forecastWindEl =  document.querySelector(`#F${dayIndexNumber}-wind`)
     let forecastHumidityEl =  document.querySelector(`#F${dayIndexNumber}-humidity`)
-
     let forecastWeatherIconTag = dayInfoObject.weather[0].icon;
     let forecastWeatherDescription = dayInfoObject.weather[0].description;
     let forecastWindCardinalDirection = convertDegreesToCardinalDirections(dayInfoObject.wind_deg)
-    
-  
-
-    forecastDateEl.textContent = decodeUnixTimeStamp(dayInfoObject.dt);
-    updateWeatherIcon(forecastWeatherIconEl, forecastWeatherIconTag);
-    forecastWeatherDescriptionEl.textContent = capitalizeEachWord(forecastWeatherDescription);
-    forecastHiTempEl.textContent = dayInfoObject.temp.max;
-    forecastLoTempEl.textContent = dayInfoObject.temp.min;
-
-    forecastWindEl.textContent = generateWindSpeedString(forecastWindCardinalDirection, dayInfoObject.wind_speed, dayInfoObject.wind_gust)
-
-    forecastHumidityEl.textContent = dayInfoObject.humidity;
-
-
-
-
+      forecastDateEl.textContent = decodeUnixTimeStamp(dayInfoObject.dt);
+      updateWeatherIcon(forecastWeatherIconEl, forecastWeatherIconTag);
+      forecastWeatherDescriptionEl.textContent = capitalizeEachWord(forecastWeatherDescription);
+      forecastHiTempEl.textContent = dayInfoObject.temp.max;
+      forecastLoTempEl.textContent = dayInfoObject.temp.min;
+      forecastWindEl.textContent = generateWindSpeedString(forecastWindCardinalDirection, dayInfoObject.wind_speed, dayInfoObject.wind_gust)
+      forecastHumidityEl.textContent = dayInfoObject.humidity;
   }
   
   const update5DayForecast = (daily) => {
-    console.log(`update5DayForecast FIRED`)
-    console.log(daily)
-    const fiveDayForecastElements = document.getElementsByClassName(`forecast`);
-    console.log(fiveDayForecastElements);
-     for (let i = fiveDayForecastElements.length; i > 0; i--){
-       console.log(fiveDayForecastElements[i]);
-       updateDayForecast(i, daily[i])
-     }
+    // console.log(`update5DayForecast FIRED`)
+      const fiveDayForecastElements = document.getElementsByClassName(`forecast`);
+      for (let i = fiveDayForecastElements.length; i > 0; i--){
+        updateDayForecast(i, daily[i])
+      }
   }
 
   const fetchWeatherData = (getLatLongCoordFetchUrl, APIKey) => {
-    console.log(`fetchWeatherData FIRED`);
-    fetch(getLatLongCoordFetchUrl)
+    // console.log(`fetchWeatherData FIRED`);
+    return fetch(getLatLongCoordFetchUrl)
     .then(response => response.json())
     .then(json => {
       console.log(json)
@@ -229,24 +302,37 @@ const decodeUnixTimeStamp = (unixStamp) => {
         throw `ERROR: 404 (Not Found) The city could not be found as entered.`
       }
       document.querySelector(`#city-name`).textContent = `${json.name}, `;
-      console.log(`LATITUDE OF ${json.name} IS ${json.coord.lat}`)
-      console.log(`LONGITUDE OF ${json.name} IS ${json.coord.lon}`)
-      console.log(json.coord)
+      // console.log(`LATITUDE OF ${json.name} IS ${json.coord.lat}`)
+      // console.log(`LONGITUDE OF ${json.name} IS ${json.coord.lon}`)
+      // console.log(json.coord)
       return json.coord;
     })
     .then(coord => {
-      fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&units=imperial&exclude=minutely,hourly&appid=${APIKey}`)
+       return fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&units=imperial&exclude=minutely,hourly&appid=${APIKey}`)
         .then(response => response.json())
         .then(json => {
           console.log(json);
             renderUpdatedWeatherValues(json);
             rotateArrow(json.current.wind_deg);
             update5DayForecast(json.daily)
-      }) 
+            return(`success`) 
+      })
     })
     .catch(err => {
       console.error(err);
-      document.querySelector(`#invalid-city-trigger`).click();
-      document.querySelector(`#city-input`).color = `red`;
+      return err;
     }) 
   }
+
+  // const APIKey = `23b24ea95d3f9c9ddcf2eea23ed648c8`
+  // let cityName = document.querySelector(`#city-input`).value;
+  // let getLatLongCoordFetchUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`;
+
+  // async function testFunction(){
+  //   console.log(`%c testing returnValueTest`, `color:red`)
+
+  //   let returnValueTest = await fetchWeatherData(getLatLongCoordFetchUrl, APIKey);
+  //   await console.log(returnValueTest)
+  // }
+
+  // testFunction();
